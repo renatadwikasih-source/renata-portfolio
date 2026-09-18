@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kalkulator IPK - Renata</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #05070d;
+            color: white;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: #101522;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.08);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+
+        .course {
+            background: #05070d;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .course h3 {
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #1a2030;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .sks {
+            max-width: 120px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #3f7cff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #2f68df;
+        }
+
+        .result {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 12px;
+            background: #05070d;
+            text-align: center;
+        }
+
+        .ipk {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #aaa;
+            text-decoration: none;
+        }
+
+        .back:hover {
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px 20px;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+
+            .sks {
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Kalkulator IPK</h1>
+
+        <p class="description">
+            Hitung Indeks Prestasi Kumulatif berdasarkan mata kuliah, SKS, dan nilai.
+        </p>
+
+        <div class="course">
+            <h3>Mata Kuliah 1</h3>
+
+            <div class="input-group">
+                <input type="text" placeholder="Nama Mata Kuliah">
+
+                <input
+                    type="number"
+                    class="sks"
+                    placeholder="SKS"
+                    min="1"
+                    max="6"
+                >
+
+                <select class="nilai">
+                    <option value="">Nilai</option>
+                    <option value="4">A</option>
+                    <option value="3.5">B+</option>
+                    <option value="3">B</option>
+                    <option value="2.5">C+</option>
+                    <option value="2">C</option>
+                    <option value="1">D</option>
+                    <option value="0">E</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="course">
+            <h3>Mata Kuliah 2</h3>
+
+            <div class="input-group">
+                <input type="text" placeholder="Nama Mata Kuliah">
+
+                <input
+                    type="number"
+                    class="sks"
+                    placeholder="SKS"
+                    min="1"
+                    max="6"
+                >
+
+                <select class="nilai">
+                    <option value="">Nilai</option>
+                    <option value="4">A</option>
+                    <option value="3.5">B+</option>
+                    <option value="3">B</option>
+                    <option value="2.5">C+</option>
+                    <option value="2">C</option>
+                    <option value="1">D</option>
+                    <option value="0">E</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="course">
+            <h3>Mata Kuliah 3</h3>
+
+            <div class="input-group">
+                <input type="text" placeholder="Nama Mata Kuliah">
+
+                <input
+                    type="number"
+                    class="sks"
+                    placeholder="SKS"
+                    min="1"
+                    max="6"
+                >
+
+                <select class="nilai">
+                    <option value="">Nilai</option>
+                    <option value="4">A</option>
+                    <option value="3.5">B+</option>
+                    <option value="3">B</option>
+                    <option value="2.5">C+</option>
+                    <option value="2">C</option>
+                    <option value="1">D</option>
+                    <option value="0">E</option>
+                </select>
+            </div>
+        </div>
+
+        <button onclick="hitungIPK()">
+            Hitung IPK
+        </button>
+
+        <div class="result" id="result">
+
+            <p>IPK Kamu</p>
+
+            <div class="ipk" id="hasilIPK">0.00</div>
+
+            <p id="keterangan"></p>
+
+        </div>
+
+        <a href="index.html" class="back">
+            ← Kembali ke Portfolio
+        </a>
+
+    </div>
+
+    <script>
+        function hitungIPK() {
+
+            const sks = document.querySelectorAll(".sks");
+            const nilai = document.querySelectorAll(".nilai");
+
+            let totalSKS = 0;
+            let totalNilai = 0;
+
+            for (let i = 0; i < sks.length; i++) {
+
+                const jumlahSKS = Number(sks[i].value);
+                const nilaiAngka = Number(nilai[i].value);
+
+                if (jumlahSKS > 0 && nilai[i].value !== "") {
+
+                    totalSKS += jumlahSKS;
+
+                    totalNilai += jumlahSKS * nilaiAngka;
+                }
+            }
+
+            if (totalSKS === 0) {
+
+                alert("Masukkan SKS dan nilai terlebih dahulu.");
+
+                return;
+            }
+
+            const ipk = totalNilai / totalSKS;
+
+            document.getElementById("hasilIPK").textContent =
+                ipk.toFixed(2);
+
+            let keterangan;
+
+            if (ipk >= 3.5) {
+                keterangan = "Prestasi Sangat Baik";
+            } else if (ipk >= 3.0) {
+                keterangan = "Prestasi Baik";
+            } else if (ipk >= 2.5) {
+                keterangan = "Prestasi Cukup";
+            } else {
+                keterangan = "Tetap Semangat Belajar";
+            }
+
+            document.getElementById("keterangan").textContent =
+                keterangan;
+
+            document.getElementById("result").style.display =
+                "block";
+        }
+    </script>
+
+</body>
+</html>
